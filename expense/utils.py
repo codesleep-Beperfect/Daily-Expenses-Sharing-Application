@@ -14,7 +14,7 @@ def generate_balance_sheet_all_users():
     users = UserModel.objects.all()
     serial_number = 1
     for user in users:
-        c.drawString(100, y, f"{serial_number}.  User:- {user.name}")
+        c.drawString(100, y, f"{serial_number}.  User:- {user.username}")
         y -= 20
         expenses = Expense.objects.filter(user=user)
         if not expenses:
@@ -27,7 +27,7 @@ def generate_balance_sheet_all_users():
             shares = ExpenseShare.objects.filter(expense=expense)
             alphabet_label = 'a'
             for share in shares:
-                c.drawString(140, y, f"{alphabet_label}.  Shared with {share.user.name}: ${share.amount} ({share.share_type})")
+                c.drawString(140, y, f"{alphabet_label}.  Shared with {share.user.username}: ${share.amount} ({share.share_type})")
                 y -= 20
                 alphabet_label = chr(ord(alphabet_label) + 1)
             y -= 10  # Extra space between different expenses
