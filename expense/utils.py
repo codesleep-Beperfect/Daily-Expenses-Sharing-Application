@@ -1,7 +1,7 @@
 from reportlab.lib.pagesizes import letter
 from reportlab.pdfgen import canvas
 from django.http import HttpResponse
-from .models import Expense, User, ExpenseShare
+from .models import Expense, UserModel, ExpenseShare
 
 def generate_balance_sheet_all_users():
     response = HttpResponse(content_type='application/pdf')
@@ -11,7 +11,7 @@ def generate_balance_sheet_all_users():
     c.drawString(100, 750, "Balance Sheet for All Users")
 
     y = 720
-    users = User.objects.all()
+    users = UserModel.objects.all()
     serial_number = 1
     for user in users:
         c.drawString(100, y, f"{serial_number}.  User:- {user.name}")

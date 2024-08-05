@@ -20,11 +20,13 @@ from expense import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('login/',views.custom_login, name='login'),
+    path('logout/',views.custom_logout, name='logout'),
     path('create/', views.create, name='create_user'),
     path('retrieve_all/', views.retrieve_all , name='retrieve_all'),
-    path('retrieve/<uuid:user_id>/', views.retrieve, name='retrieve'),
+    path('retrieve/<int:user_id>/', views.retrieve, name='retrieve'),
     path('add-expenses/', views.add_expense, name='add_expense'),
-    path('user/<uuid:user_id>/expenses/', views.get_user_expenses, name='get_user_expenses'),
+    path('user/<int:user_id>/expenses/', views.get_user_expenses, name='get_user_expenses'),
     path('expenses/overall/', views.get_overall_expenses, name='get_overall_expenses'),
     path('balance-sheet/download/', views.download_all_users_balance_sheet, name='download_all_users_balance_sheet'),
 ]

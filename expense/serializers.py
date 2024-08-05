@@ -1,12 +1,21 @@
 from rest_framework import serializers
-from .models import User, Expense, ExpenseShare
+from .models import UserModel, Expense, ExpenseShare
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
-        model = User
-        fields = ['id', 'name', 'email', 'phone_number']
+        model = UserModel
+        fields = ['id', 'username', 'email', 'phone_number','password']
+        extra_kwargs = {'password':{'write_only':True}}
 
-    
+    def create(self, validated_data):
+        password = validated_data.pop('password')
+        email = validated_data.get('email')
+        if UserModel.objects.filter(email=email).exists():
+            raise serializers.ValidationError("A user with this email already exists.")
+        user = UserModel(**validated_data)
+        user.set_password(raw_password=password)
+        user.save()
+        return user
 
 class ExpenseShareSerializer(serializers.ModelSerializer):
     class Meta:
@@ -36,7 +45,6 @@ class ExpenseSerializer(serializers.ModelSerializer):
                 if share['percentage'] is None:
                     raise serializers.ValidationError("Percentage is required for percentage shares.")
                 total_percentage += share['percentage']
-
         if share_type == 'exact' and total_share_amount != self.initial_data.get('amount'):
             raise serializers.ValidationError("The sum of share amounts does not match the total expense amount.")
         if share_type == 'percentage' and total_percentage != 100:

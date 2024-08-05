@@ -57,73 +57,109 @@ The Daily Expenses Sharing Application is a robust backend service designed to m
     ```sh
     payload:
     {
-        "name":"Deepak Agarwal",
+        "username":"Deepak",
         "email":"deepak@gmail.com",
-        "phone_number":"8346278198"
+        "phone_number":"9935327382"
+        "password":"12345"
     }
     response:
     {
-        "id": "c2721618-6cc2-4494-831c-5f86e4802eb0",
-        "name": "Deepak Agarwal",
+        "id": "3",
+        "username": "Deepak",
         "email": "deepak@gmail.com",
-        "phone_number": "8346278198"
+        "phone_number": "9935327382"
     }
+
+### POST /login/
+- **Login an User** 
+    : Notedown the obtained csrf_token and seesion_id from the cookie section from response side
+    ```sh
+    payload:
+    {
+        "username":"Deepak",
+        "password":"12345"
+    }
+    response:
+    {
+        "message":"Login successful"
+    }
+
+### POST /logout/
+- **Logout an User**
+    ```sh
+    headers:
+    X-CSRFToken: obtained csrf_token
+    Cookie: sessionid=obtained session_id
+    response:
+    {
+        "message":"Logout succcessful"
+    }
+
 ### GET /retrieve_all/
 - **List all users**
     ```sh
+    headers:
+    X-CSRFToken: obtained csrf_token
+    Cookie: sessionid=obtained session_id
     response:
     {
         "data":[
         {
-            "id": "c2721618-6cc2-4494-831c-5f86e4802eb0",
+            "id": "3",
             "name": "Deepak Agarwal",
             "email": "deepak@gmail.com",
-            "phone_number": "8346278198"
+            "phone_number": "9935327382"
         },
         {
-            "id": "2ffcb87f-2451-4805-942c-3c8d6578356b",
-            "name": "Prateek Pal",
-            "email": "prateek@gmail.com",
-            "phone_number": "9695627369"
+            "id": "4",
+            "username": "Lucky",
+            "email": "lucky@gmail.com",
+            "phone_number": "9734874398"
         }
         ]
     }
 
-### GET /retrieve/user_id
-- **Return an User if present**
+### GET /retrieve/user_id/
+- **Returns an User if present**
     ```sh
+    headers:
+    X-CSRFToken: obtained csrf_token
+    Cookie: sessionid=obtained session_id
     response{
-        "id": "c2721618-6cc2-4494-831c-5f86e4802eb0",
+        "id": "3",
         "name": "Deepak Agarwal",
         "email": "deepak@gmail.com",
-        "phone_number": "8346278198"
+        "phone_number": "9935327382"
     }
 
 ### POST /add-expenses/
 - **Create an Expense**
     ```sh
+    headers:
+    X-CSRFToken: obtained csrf_token
+    Cookie: sessionid=obtained session_id
     payload:
     {
-      "user": "ff256f70-2d9d-4559-bb66-557e8efd4e69",
+      "user": "1",
       "title": "Room",
       "description": "Room at Manali",
       "amount": "900.00",
-      "date": "2024-07-28",
+      "date": "2024-08-05",
       "shares": [
         {
-          "user": "ff256f70-2d9d-4559-bb66-557e8efd4e69",
+          "user": "1",
           "amount": "400.00",
           "share_type": "exact",
           "percentage": null
         },
         {
-          "user": "fa977a20-688b-4dc0-8e54-4f825c64567e",
+          "user": "2",
           "amount": "300.00",
           "share_type": "exact",
           "percentage": null
         },
         {
-          "user": "c2721618-6cc2-4494-831c-5f86e4802eb0",
+          "user": "3",
           "amount": "200.00",
           "share_type": "exact",
           "percentage": null
@@ -132,26 +168,26 @@ The Daily Expenses Sharing Application is a robust backend service designed to m
     }
     response:
     { "data":{
-        "user": "ff256f70-2d9d-4559-bb66-557e8efd4e69",
+        "user": "1",
         "title": "Room",
         "description": "Room at Manali",
         "amount": "900.00",
         "date": "2024-07-28",
         "shares": [
         {
-            "user": "ff256f70-2d9d-4559-bb66-557e8efd4e69",
+            "user": "1",
             "amount": "400.00",
             "share_type": "exact",
             "percentage": null
         },
         {
-            "user": "fa977a20-688b-4dc0-8e54-4f825c64567e",
+            "user": "2",
             "amount": "300.00",
             "share_type": "exact",
             "percentage": null
         },
         {
-            "user": "c2721618-6cc2-4494-831c-5f86e4802eb0",
+            "user": "3",
             "amount": "200.00",
             "share_type": "exact",
             "percentage": null
@@ -163,149 +199,121 @@ The Daily Expenses Sharing Application is a robust backend service designed to m
 ### GET /user/user_id/expenses/
 - **Return an Expenses of an user**
     ```sh
+    headers:
+    X-CSRFToken: obtained csrf_token
+    Cookie: sessionid=obtained session_id
     response{
         "data":[
         {
-        "user": "ff256f70-2d9d-4559-bb66-557e8efd4e69",
-        "title": "Dinner",
-        "description": "Dinner at restaurant",
-        "amount": "100.00",
-        "date": "2024-07-28",
-        "shares": [
-        {
-            "user": "ff256f70-2d9d-4559-bb66-557e8efd4e69",
-            "amount": "33.33",
-            "share_type": "equal",
-            "percentage": null
-        },
-        {
-            "user": "fa977a20-688b-4dc0-8e54-4f825c64567e",
-            "amount": "33.33",
-            "share_type": "equal",
-            "percentage": null
-        },
-        {
-            "user": "622a80ae-48a8-48ce-bb91-584f4fd28ffb",
-            "amount": "33.33",
-            "share_type": "equal",
-            "percentage": null
-        }
-        ]
-        },
-        {
-        "user": "ff256f70-2d9d-4559-bb66-557e8efd4e69",
+        "user": "1",
         "title": "Room",
         "description": "Room at Manali",
         "amount": "900.00",
         "date": "2024-07-28",
         "shares": [
         {
-            "user": "ff256f70-2d9d-4559-bb66-557e8efd4e69",
+            "user": "1",
             "amount": "400.00",
             "share_type": "exact",
             "percentage": null
         },
         {
-            "user": "fa977a20-688b-4dc0-8e54-4f825c64567e",
+            "user": "2",
             "amount": "300.00",
             "share_type": "exact",
             "percentage": null
         },
         {
-            "user": "c2721618-6cc2-4494-831c-5f86e4802eb0",
+            "user": "3",
             "amount": "200.00",
             "share_type": "exact",
             "percentage": null
         }
         ]
+        },
+        {
+        "user": 1,
+        "title": "Office Supplies",
+        "description": "Purchased office supplies",
+        "amount": "100.00",
+        "date": "2024-08-05",
+        "shares": [
+        {
+            "user": 2,
+            "amount": "50.00",
+            "share_type": "exact",
+            "percentage": null
+        },
+        {
+            "user": 3,
+            "amount": "50.00",
+            "share_type": "exact",
+            "percentage": null
         }
+        ]
+    }
     ]
     }
 
 ### GET /expenses/overall/
 - **List all expenses**
     ```sh
+    headers:
+    X-CSRFToken: obtained csrf_token
+    Cookie: sessionid=obtained session_id
     response:{
-    "total_expense_amount": 1500.0,
-    "expenses": [
+    "total_expense_amount": 1000.0,
+  "expenses": [
+    {
+      "user": 1,
+      "title": "Room",
+      "description": "Room at Manali",
+      "amount": "900.00",
+      "date": "2024-08-05",
+      "shares": [
         {
-        "user": "ff256f70-2d9d-4559-bb66-557e8efd4e69",
-        "title": "Dinner",
-        "description": "Dinner at restaurant",
-        "amount": "100.00",
-        "date": "2024-07-28",
-        "shares": [
-            {
-            "user": "ff256f70-2d9d-4559-bb66-557e8efd4e69",
-            "amount": "33.33",
-            "share_type": "equal",
-            "percentage": null
-            },
-            {
-            "user": "fa977a20-688b-4dc0-8e54-4f825c64567e",
-            "amount": "33.33",
-            "share_type": "equal",
-            "percentage": null
-            },
-            {
-            "user": "622a80ae-48a8-48ce-bb91-584f4fd28ffb",
-            "amount": "33.33",
-            "share_type": "equal",
-            "percentage": null
-            }
-        ]
+          "user": 1,
+          "amount": "400.00",
+          "share_type": "exact",
+          "percentage": null
         },
         {
-        "user": "ff256f70-2d9d-4559-bb66-557e8efd4e69",
-        "title": "Room",
-        "description": "Room at Manali",
-        "amount": "900.00",
-        "date": "2024-07-28",
-        "shares": [
-            {
-            "user": "ff256f70-2d9d-4559-bb66-557e8efd4e69",
-            "amount": "400.00",
-            "share_type": "exact",
-            "percentage": null
-            },
-            {
-            "user": "fa977a20-688b-4dc0-8e54-4f825c64567e",
-            "amount": "300.00",
-            "share_type": "exact",
-            "percentage": null
-            },
-            {
-            "user": "c2721618-6cc2-4494-831c-5f86e4802eb0",
-            "amount": "200.00",
-            "share_type": "exact",
-            "percentage": null
-            }
-        ]
+          "user": 2,
+          "amount": "300.00",
+          "share_type": "exact",
+          "percentage": null
         },
         {
-        "user": "fa977a20-688b-4dc0-8e54-4f825c64567e",
-        "title": "Part",
-        "description": "Birthday Party",
-        "amount": "500.00",
-        "date": "2024-07-28",
-        "shares": [
-            {
-            "user": "fa977a20-688b-4dc0-8e54-4f825c64567e",
-            "amount": "350.00",
-            "share_type": "percentage",
-            "percentage": "70.00"
-            },
-            {
-            "user": "c2721618-6cc2-4494-831c-5f86e4802eb0",
-            "amount": "150.00",
-            "share_type": "percentage",
-            "percentage": "30.00"
-            }
-        ]
+          "user": 3,
+          "amount": "200.00",
+          "share_type": "exact",
+          "percentage": null
         }
-    ]
+      ]
+    },
+    {
+      "user": 1,
+      "title": "Office Supplies",
+      "description": "Purchased office supplies",
+      "amount": "100.00",
+      "date": "2024-08-05",
+      "shares": [
+        {
+          "user": 2,
+          "amount": "50.00",
+          "share_type": "exact",
+          "percentage": null
+        },
+        {
+          "user": 3,
+          "amount": "50.00",
+          "share_type": "exact",
+          "percentage": null
+        }
+      ]
     }
-    }
+  ]
+}
 
 ### GET /balance-sheet/download/
 - **Download Balance-Sheet**
