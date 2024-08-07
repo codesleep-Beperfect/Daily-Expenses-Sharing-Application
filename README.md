@@ -72,7 +72,7 @@ The Daily Expenses Sharing Application is a robust backend service designed to m
 
 ### POST /login/
 - **Login an User** 
-    : Notedown the obtained csrf_token and seesion_id from the cookie section from response side
+    : Notedown the obtained csrf_token and session_id from the cookie section from response side
     ```sh
     payload:
     {
